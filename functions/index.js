@@ -22,15 +22,13 @@ async function requestIndex() {
   const response = await fetch(url);
   const json = await response.json();
   return json.items.map((item) => {
-    html`<p>
-      <a href=""></a>
-    </p>`;
-  });
+    return html`<p><a href="${item.link}">${item.title}</a></p>`;
+  }).join('');
 }
 
 module.exports.index = functions.https.onRequest(async (request, response) => {
   const partials = await loadPartials();
-  const body = 'the body';
+  const body = await requestIndex();
   const html = partials.head + partials.sidebar + body + partials.foot;
   response.status(200).send(html);
 });
