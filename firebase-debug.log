@@ -1,0 +1,43 @@
+[debug] [2018-03-25T19:43:49.921Z] ----------------------------------------------------------------------
+[debug] [2018-03-25T19:43:49.925Z] Command:       /usr/local/Cellar/node/9.8.0/bin/node /Users/jeff/git/application-shell/node_modules/.bin/firebase serve --only hosting,functions
+[debug] [2018-03-25T19:43:49.925Z] CLI Version:   3.17.7
+[debug] [2018-03-25T19:43:49.925Z] Platform:      darwin
+[debug] [2018-03-25T19:43:49.925Z] Node Version:  v9.8.0
+[debug] [2018-03-25T19:43:49.926Z] Time:          Sun Mar 25 2018 15:43:49 GMT-0400 (EDT)
+[debug] [2018-03-25T19:43:49.926Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-03-25T19:43:49.939Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-03-25T19:43:49.939Z] > authorizing via signed-in user
+[debug] [2018-03-25T19:43:49.941Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/photo-frame-formatter  
+  
+ Sun Mar 25 2018 15:43:49 GMT-0400 (EDT)
+[debug] [2018-03-25T19:43:50.278Z] <<< HTTP RESPONSE 200
+[debug] [2018-03-25T19:43:50.279Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/photo-frame-formatter/tokens  
+  
+ Sun Mar 25 2018 15:43:50 GMT-0400 (EDT)
+[debug] [2018-03-25T19:43:50.755Z] <<< HTTP RESPONSE 200
+[debug] [2018-03-25T19:43:50.756Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/photo-frame-formatter  
+  
+ Sun Mar 25 2018 15:43:50 GMT-0400 (EDT)
+[debug] [2018-03-25T19:43:51.034Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/Users/jeff/git/application-shell'...
+[info] 
+[info] i  functions: Preparing to emulate functions.
+[debug] [2018-03-25T19:43:51.588Z] Fetching environment
+[debug] [2018-03-25T19:43:51.590Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/435113074509:getServerAppConfig  
+  
+ Sun Mar 25 2018 15:43:51 GMT-0400 (EDT)
+[debug] [2018-03-25T19:43:51.591Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/435113074509/clients/_:getWebAppConfig  
+  
+ Sun Mar 25 2018 15:43:51 GMT-0400 (EDT)
+[debug] [2018-03-25T19:43:51.931Z] <<< HTTP RESPONSE 200
+[debug] [2018-03-25T19:43:51.932Z] Starting @google-cloud/functions-emulator
+[debug] [2018-03-25T19:43:52.008Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: public
+[info] ✔  hosting: Local server: http://localhost:5000
+
+[debug] [2018-03-25T19:43:53.490Z] Parsing function triggers
+[info] [hosting] Rewriting / to local function index
+[info] ✔  functions: index: http://localhost:5001/photo-frame-formatter/us-central1/index
+[info] [hosting] Rewriting / to local function index
