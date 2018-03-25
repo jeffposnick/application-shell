@@ -1,0 +1,22 @@
+{
+  "name": "stack-overflow-pwa",
+  "version": "1.0.0",
+  "description": "A PWA for Stack Overflow content.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jeffposnick/application-shell.git"
+  },
+  "author": "Jeff Posnick",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/jeffposnick/application-shell/issues"
+  },
+  "homepage": "https://github.com/jeffposnick/application-shell#readme",
+  "devDependencies": {
+    "firebase-tools": "^3.17.7"
+  }
+}
