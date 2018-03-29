@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "public",
+    "public": "www",
     "ignore": [
       "firebase.json",
       "**/.*",
@@ -9,6 +9,9 @@
     "rewrites": [{
       "source": "/",
       "function": "index"
+    }, {
+      "source": "/question/*",
+      "function": "question"
     }]
   }
 }
