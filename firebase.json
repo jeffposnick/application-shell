@@ -10,8 +10,11 @@
       "source": "/",
       "function": "index"
     }, {
-      "source": "/question/*",
-      "function": "question"
+      "source": "/questions/*",
+      "function": "questions"
+    }, {
+      "source": "/about",
+      "function": "about"
     }]
   }
 }

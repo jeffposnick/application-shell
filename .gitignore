@@ -1,1 +1,5 @@
+# Directories
 node_modules/
+
+# Files
+/firebase-debug.log
