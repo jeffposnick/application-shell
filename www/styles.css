@@ -11,6 +11,10 @@ main > div {
   margin-bottom: 16px;
 }
 
+h1 {
+  margin: 0;
+}
+
 nav > ul > li > a, main > div > a {
   text-decoration: none;
 }
@@ -43,6 +47,20 @@ pre {
   overflow: auto;
   max-height: 600px;
   padding: 16px;
+}
+
+code {
+  font-family: "Source Code Pro", "SF Mono", "Monaco", "Inconsolata", "Fira Mono", "Droid Sans Mono", monospace;
+}
+
+img {
+  max-width: 100%;
+}
+
+img.profile {
+  height: 32px;
+  vertical-align: middle;
+  width: 32px;
 }
 
 @media (max-width: 800px) {
