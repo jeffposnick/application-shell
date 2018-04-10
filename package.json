@@ -4,7 +4,8 @@
   "description": "A PWA for Stack Overflow content.",
   "main": "index.js",
   "scripts": {
-    "serve": "firebase serve --only hosting,functions"
+    "serve": "firebase serve --only hosting,functions",
+    "workbox": "workbox injectManifest"
   },
   "repository": {
     "type": "git",
@@ -20,6 +21,7 @@
     "eslint": "^4.19.1",
     "eslint-config-google": "^0.9.1",
     "firebase-tools": "^3.17.7",
-    "node-fetch": "^2.1.2"
+    "node-fetch": "^2.1.2",
+    "workbox-cli": "^3.0.1"
   }
 }
