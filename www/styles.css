@@ -4,7 +4,13 @@
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-  margin: 8px;
+  padding: 0;
+  margin: 0;
+}
+
+main {
+  max-width: 80%;
+  margin: 32px;
 }
 
 main > div {
@@ -15,7 +21,7 @@ h1 {
   margin: 0;
 }
 
-nav > ul > li > a, main > div > a {
+nav > a {
   text-decoration: none;
 }
 
@@ -23,24 +29,16 @@ a {
   color: black;
 }
 
-body > div {
+hr {
+  margin: 32px 0 32px 0;
+}
+
+nav, footer {
   display: flex;
-}
-
-nav {
-  margin: 16px;
-}
-
-nav > ul {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  padding: 0;
-  margin: 8px;
-}
-
-nav > ul > li {
-  margin: 8px;
+  justify-content: space-around;
+  margin: 0;
+  padding: 16px;
+  background-color: aliceblue;
 }
 
 pre {
@@ -61,14 +59,4 @@ img.profile {
   height: 32px;
   vertical-align: middle;
   width: 32px;
-}
-
-@media (max-width: 800px) {
-  body > div {
-    flex-direction: column;
-  }
-
-  nav > ul {
-    flex-direction: row;
-  }
 }
