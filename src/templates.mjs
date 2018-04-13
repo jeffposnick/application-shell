@@ -47,5 +47,10 @@ export function question(item) {
 `;
   }) : [];
 
-  return [question, ...answers].join('<hr>');
+  // TODO: Escaping.
+  const metadataScript = `<script>
+    document.title = ${JSON.stringify(item.title)};
+  </script>`;
+
+  return [question, ...answers].join('<hr>') + metadataScript;
 }
