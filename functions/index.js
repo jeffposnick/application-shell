@@ -2,7 +2,9 @@ const fse = require('fs-extra');
 const functions = require('firebase-functions');
 const path = require('path');
 
-const makeRequest = require('../lib/make-request');
+const makeRequest = require('../build/make-request');
+
+global.fetch = require('node-fetch');
 
 let partialCache;
 async function loadPartials() {

@@ -1,4 +1,5 @@
 # Directories
+build/
 node_modules/
 /www/workbox-v3.0.1/
 
