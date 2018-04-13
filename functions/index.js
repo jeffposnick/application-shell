@@ -6,6 +6,8 @@ const makeRequest = require('../build/make-request');
 
 global.fetch = require('node-fetch');
 
+global.fetch = require('node-fetch');
+
 let partialCache;
 async function loadPartials() {
   if (!partialCache) {
