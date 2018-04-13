@@ -11,5 +11,9 @@ module.exports = {
   },
   rules: {
     'require-jsdoc': 0,
-  }
+  },
+  overrides: [{
+    files: ['**/*.mjs'],
+    sourceType: 'module',
+  }]
 };

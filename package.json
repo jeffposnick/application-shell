@@ -23,5 +23,8 @@
     "firebase-tools": "^3.17.7",
     "node-fetch": "^2.1.2",
     "workbox-cli": "^3.0.1"
+  },
+  "devDependencies": {
+    "rollup": "^0.57.1"
   }
 }
