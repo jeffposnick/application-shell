@@ -1,5 +1,8 @@
-import * as urls from './urls.mjs';
 import * as templates from './templates.mjs';
+import * as urls from './urls.mjs';
+import router from './router.mjs';
+import routes from './routes.mjs';
+import partials from './partials.mjs';
 
 importScripts('workbox-v3.1.0/workbox-sw.js');
 workbox.setConfig({modulePathPrefix: 'workbox-v3.1.0/'});
@@ -15,10 +18,11 @@ const apiStrategy = workbox.strategies.staleWhileRevalidate({
 });
 
 const streamingResponseStrategy = workbox.streams.strategy([
-  () => cacheStrategy.makeRequest({request: 'partials/head.html'}),
-  () => cacheStrategy.makeRequest({request: 'partials/navbar.html'}),
+  () => cacheStrategy.makeRequest({request: partials.HEAD}),
+  () => cacheStrategy.makeRequest({request: partials.NAVBAR}),
   async ({event, url}) => {
-    if (url.pathname === '/') {
+    const route = router(url.pathname);
+    if (route === routes.INDEX) {
       const indexResponse = await apiStrategy.makeRequest({
         event,
         request: urls.index(),
@@ -28,11 +32,11 @@ const streamingResponseStrategy = workbox.streams.strategy([
       return templates.index(items);
     }
 
-    if (url.pathname === '/about') {
-      return cacheStrategy.makeRequest({request: 'partials/about.html'});
+    if (route === routes.ABOUT) {
+      return cacheStrategy.makeRequest({request: partials.ABOUT});
     }
 
-    if (url.pathname.startsWith('/questions/')) {
+    if (route === routes.QUESTIONS) {
       const questionId = url.pathname.split('/').pop();
       const questionResponse = await apiStrategy.makeRequest({
         event,
@@ -43,9 +47,9 @@ const streamingResponseStrategy = workbox.streams.strategy([
       return templates.question(item);
     }
 
-    return `<div>Unknown URL.</div>`;
+    return `<p>${url} couldn't be handled by the service worker.</p>`;
   },
-  () => cacheStrategy.makeRequest({request: 'partials/foot.html'}),
+  () => cacheStrategy.makeRequest({request: partials.FOOT}),
 ]);
 
 workbox.routing.registerRoute(

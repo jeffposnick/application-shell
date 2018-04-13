@@ -1,74 +1,71 @@
 const fetch = require('node-fetch');
 const fse = require('fs-extra');
 const functions = require('firebase-functions');
-const path = require('path');
 
+const partials = require('../build/partials');
+const router = require('../build/router');
+const routes = require('../build/routes');
 const templates = require('../build/templates');
 const urls = require('../build/urls');
 
-let partialCache;
-async function loadPartials() {
-  if (!partialCache) {
-    const readFilePromises = [
-      'head.html',
-      'navbar.html',
-      'about.html',
-      'foot.html',
-    ].map((name) => path.join('..', 'www', 'partials', name))
-     .map((filePath) => fse.readFile(filePath, 'utf-8'));
-    const [head, navbar, about, foot] = await Promise.all(readFilePromises);
-    partialCache = {head, navbar, about, foot};
+const partialCache = {};
+async function readPartial(partial) {
+  if (!(partial in partialCache)) {
+    const filePath = `../www/${partial}`;
+    const contents = await fse.readFile(filePath, 'utf-8');
+    partialCache[partial] = contents.trim();
   }
 
-  return partialCache;
+  return partialCache[partial];
 }
 
-const index = async (request, response) => {
-  const partials = await loadPartials();
+const HANDLERS = {};
+HANDLERS[routes.INDEX] = async (req, res) => {
+  res.write(await readPartial(partials.HEAD));
+  res.write(await readPartial(partials.NAVBAR));
+
   const indexResponse = await fetch(urls.index());
   const json = await indexResponse.json();
   const items = json.items;
-  const html = partials.head +
-    partials.navbar +
-    templates.index(items) +
-    partials.foot;
-  response.status(200).send(html);
+  res.write(templates.index(items));
+
+  res.write(await readPartial(partials.FOOT));
+  res.end();
 };
 
-const questions = async (request, response) => {
-  const partials = await loadPartials();
-  const questionId = request.url.split('/').pop();
+HANDLERS[routes.QUESTIONS] = async (req, res) => {
+  res.write(await readPartial(partials.HEAD));
+  res.write(await readPartial(partials.NAVBAR));
+
+  const questionId = req.url.split('/').pop();
   const questionsResponse = await fetch(urls.questions(questionId));
   const json = await questionsResponse.json();
   const item = json.items[0];
-  const html = partials.head +
-    partials.navbar +
-    templates.question(item) +
-    partials.foot;
-  response.status(200).send(html);
+  res.write(templates.question(item));
+
+  res.write(await readPartial(partials.FOOT));
+  res.end();
 };
 
-const about = async (request, response) => {
-  const partials = await loadPartials();
-  const html = partials.head +
-    partials.navbar +
-    partials.about +
-    partials.foot;
-  response.status(200).send(html);
+HANDLERS[routes.ABOUT] = async (req, res) => {
+  res.write(await readPartial(partials.HEAD));
+  res.write(await readPartial(partials.NAVBAR));
+  res.write(await readPartial(partials.ABOUT));
+  res.write(await readPartial(partials.FOOT));
+  res.end();
 };
 
-module.exports.handleRequest = functions.https.onRequest(async (request, response) => {
-  if (request.url === '/') {
-    return index(request, response);
+module.exports.handleRequest = functions.https.onRequest(async (req, res) => {
+  try {
+    const route = router(req.url);
+    const handler = HANDLERS[route];
+    if (handler) {
+      await handler(req, res);
+    } else {
+      res.status(404);
+      res.end();
+    }
+  } catch (error) {
+    res.status(500).send(error);
   }
-
-  if (request.url === '/about') {
-    return about(request, response);
-  }
-
-  if (request.url.startsWith('/questions/')) {
-    return questions(request, response);
-  }
-
-  response.status(404);
 });

@@ -11,6 +11,24 @@ export default [{
     format: 'cjs',
   },
 }, {
+  input: 'src/router.mjs',
+  output: {
+    file: 'build/router.js',
+    format: 'cjs',
+  },
+}, {
+  input: 'src/routes.mjs',
+  output: {
+    file: 'build/routes.js',
+    format: 'cjs',
+  },
+}, {
+  input: 'src/partials.mjs',
+  output: {
+    file: 'build/partials.js',
+    format: 'cjs',
+  },
+}, {
   input: 'src/source-sw.mjs',
   output: {
     file: 'build/source-sw.js',
