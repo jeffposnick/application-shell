@@ -21,34 +21,37 @@ const streamingResponseStrategy = workbox.streams.strategy([
   () => cacheStrategy.makeRequest({request: partials.HEAD}),
   () => cacheStrategy.makeRequest({request: partials.NAVBAR}),
   async ({event, url}) => {
-    const route = router(url.pathname);
-    if (route === routes.INDEX) {
-      const tag = 'service-worker';
-      const listResponse = await apiStrategy.makeRequest({
-        event,
-        request: urls.listQuestionsForTag(tag),
-      });
-      const json = await listResponse.json();
-      const items = json.items;
-      return templates.list(tag, items);
-    }
+    try {
+      const route = router(url.pathname);
+      if (route === routes.INDEX) {
+        const tag = url.searchParams.get('tag') || 'service-worker';
+        const listResponse = await apiStrategy.makeRequest({
+          event,
+          request: urls.listQuestionsForTag(tag),
+        });
+        const json = await listResponse.json();
+        const items = json.items;
+        return templates.list(tag, items);
+      }
 
-    if (route === routes.ABOUT) {
-      return cacheStrategy.makeRequest({request: partials.ABOUT});
-    }
+      if (route === routes.ABOUT) {
+        return cacheStrategy.makeRequest({request: partials.ABOUT});
+      }
 
-    if (route === routes.QUESTIONS) {
-      const questionId = url.pathname.split('/').pop();
-      const questionResponse = await apiStrategy.makeRequest({
-        event,
-        request: urls.getQuestion(questionId),
-      });
-      const json = await questionResponse.json();
-      const item = json.items[0];
-      return templates.question(item);
+      if (route === routes.QUESTIONS) {
+        const questionId = url.pathname.split('/').pop();
+        const questionResponse = await apiStrategy.makeRequest({
+          event,
+          request: urls.getQuestion(questionId),
+        });
+        const json = await questionResponse.json();
+        const item = json.items[0];
+        return templates.question(item);
+      }
+      return `<p>The service worker can't handle ${url}</p>`;
+    } catch (error) {
+      return `<p>An error occurred:</p><pre>${error}</pre>`;
     }
-
-    return `<p>${url} couldn't be handled by the service worker.</p>`;
   },
   () => cacheStrategy.makeRequest({request: partials.FOOT}),
 ]);

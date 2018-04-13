@@ -24,7 +24,7 @@ HANDLERS[routes.INDEX] = async (req, res) => {
   res.write(await readPartial(partials.HEAD));
   res.write(await readPartial(partials.NAVBAR));
 
-  const tag = 'service-worker';
+  const tag = req.param('tag') || 'service-worker';
   const listResponse = await fetch(urls.listQuestionsForTag(tag));
   const json = await listResponse.json();
   const items = json.items;
