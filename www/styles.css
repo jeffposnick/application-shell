@@ -34,6 +34,10 @@ main {
   margin: 82px 32px 32px 32px;
 }
 
+main:empty {
+  text-align: center;
+}
+
 main:empty:after {
   content: 'Loading... please wait.';
 }
