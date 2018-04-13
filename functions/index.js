@@ -23,7 +23,7 @@ async function loadPartials() {
   return partialCache;
 }
 
-module.exports.index = functions.https.onRequest(async (request, response) => {
+const index = async (request, response) => {
   const partials = await loadPartials();
   const indexResponse = await fetch(urls.index());
   const json = await indexResponse.json();
@@ -33,9 +33,9 @@ module.exports.index = functions.https.onRequest(async (request, response) => {
     templates.index(items) +
     partials.foot;
   response.status(200).send(html);
-});
+};
 
-module.exports.questions = functions.https.onRequest(async (request, response) => {
+const questions = async (request, response) => {
   const partials = await loadPartials();
   const questionId = request.url.split('/').pop();
   const questionsResponse = await fetch(urls.questions(questionId));
@@ -46,14 +46,29 @@ module.exports.questions = functions.https.onRequest(async (request, response) =
     templates.question(item) +
     partials.foot;
   response.status(200).send(html);
-});
+};
 
-module.exports.about = functions.https.onRequest(async (request, response) => {
+const about = async (request, response) => {
   const partials = await loadPartials();
   const html = partials.head +
     partials.navbar +
     partials.about +
     partials.foot;
   response.status(200).send(html);
-});
+};
 
+module.exports.handleRequest = functions.https.onRequest(async (request, response) => {
+  if (request.url === '/') {
+    return index(request, response);
+  }
+
+  if (request.url === '/about') {
+    return about(request, response);
+  }
+
+  if (request.url.startsWith('/questions/')) {
+    return questions(request, response);
+  }
+
+  response.status(404);
+});

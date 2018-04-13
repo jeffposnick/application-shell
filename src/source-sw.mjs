@@ -10,7 +10,9 @@ const cacheStrategy = workbox.strategies.cacheFirst({
   cacheName: workbox.core.cacheNames.precache,
 });
 
-const apiStrategy = workbox.strategies.staleWhileRevalidate();
+const apiStrategy = workbox.strategies.staleWhileRevalidate({
+  cacheName: 'api-cache',
+});
 
 const streamingResponseStrategy = workbox.streams.strategy([
   () => cacheStrategy.makeRequest({request: 'partials/head.html'}),

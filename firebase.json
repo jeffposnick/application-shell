@@ -14,14 +14,8 @@
       "**/node_modules/**"
     ],
     "rewrites": [{
-      "source": "/",
-      "function": "index"
-    }, {
-      "source": "/questions/*",
-      "function": "questions"
-    }, {
-      "source": "/about",
-      "function": "about"
+      "source": "**",
+      "function": "handleRequest"
     }]
   }
 }
