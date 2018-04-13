@@ -56,21 +56,21 @@ workbox.routing.registerRoute(
   new workbox.routing.NavigationRoute(streamingResponseStrategy)
 );
 
+// Gravatar images support CORS, so we won't be storing opaque responses.
 workbox.routing.registerRoute(
-  new RegExp('https://www\.gravatar\.com/'),
+  new RegExp('https://www\\.gravatar\\.com/'),
   workbox.strategies.cacheFirst({
     cacheName: 'profile-images',
     plugins: [
-      new workbox.cacheableResponse.Plugin({statuses: [0, 200]}),
-      new workbox.expiration.Plugin({maxEntries: 10}),
+      new workbox.expiration.Plugin({maxEntries: 50}),
     ],
   })
 );
 
 workbox.routing.registerRoute(
-  new RegExp('https://i\.stack\.imgur\.com'),
+  new RegExp('^https://.*(?:\\.jpg|\\.png)'),
   workbox.strategies.cacheFirst({
-    cacheName: 'imgur-images',
+    cacheName: 'other-images',
     plugins: [
       new workbox.cacheableResponse.Plugin({statuses: [0, 200]}),
       new workbox.expiration.Plugin({maxEntries: 10}),
