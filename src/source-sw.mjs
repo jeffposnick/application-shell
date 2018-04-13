@@ -23,13 +23,14 @@ const streamingResponseStrategy = workbox.streams.strategy([
   async ({event, url}) => {
     const route = router(url.pathname);
     if (route === routes.INDEX) {
-      const indexResponse = await apiStrategy.makeRequest({
+      const tag = 'service-worker';
+      const listResponse = await apiStrategy.makeRequest({
         event,
-        request: urls.index(),
+        request: urls.listQuestionsForTag(tag),
       });
-      const json = await indexResponse.json();
+      const json = await listResponse.json();
       const items = json.items;
-      return templates.index(items);
+      return templates.list(tag, items);
     }
 
     if (route === routes.ABOUT) {
@@ -40,7 +41,7 @@ const streamingResponseStrategy = workbox.streams.strategy([
       const questionId = url.pathname.split('/').pop();
       const questionResponse = await apiStrategy.makeRequest({
         event,
-        request: urls.questions(questionId),
+        request: urls.getQuestion(questionId),
       });
       const json = await questionResponse.json();
       const item = json.items[0];

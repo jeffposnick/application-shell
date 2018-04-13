@@ -20,9 +20,6 @@
     "url": "https://github.com/jeffposnick/application-shell/issues"
   },
   "homepage": "https://github.com/jeffposnick/application-shell#readme",
-  "dependencies": {
-    "node-fetch": "^2.1.2"
-  },
   "devDependencies": {
     "eslint": "^4.19.1",
     "eslint-config-google": "^0.9.1",

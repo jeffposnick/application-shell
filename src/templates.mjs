@@ -1,5 +1,5 @@
-export function index(items) {
-  return items.map((item) => {
+export function list(tag, items) {
+  return `<h3>Top "${tag}" Questions</h3>` + items.map((item) => {
     return `
 <div>
   <a href="/questions/${item.question_id}">
@@ -12,7 +12,7 @@ export function index(items) {
 
 export function question(item) {
   const question = `
-<h1>${item.title}</h1>
+<h3>${item.title}</h3>
 <div>${item.body}</div>
 <div>
   <img class="profile"

@@ -24,10 +24,11 @@ HANDLERS[routes.INDEX] = async (req, res) => {
   res.write(await readPartial(partials.HEAD));
   res.write(await readPartial(partials.NAVBAR));
 
-  const indexResponse = await fetch(urls.index());
-  const json = await indexResponse.json();
+  const tag = 'service-worker';
+  const listResponse = await fetch(urls.listQuestionsForTag(tag));
+  const json = await listResponse.json();
   const items = json.items;
-  res.write(templates.index(items));
+  res.write(templates.list(tag, items));
 
   res.write(await readPartial(partials.FOOT));
   res.end();
@@ -38,8 +39,8 @@ HANDLERS[routes.QUESTIONS] = async (req, res) => {
   res.write(await readPartial(partials.NAVBAR));
 
   const questionId = req.url.split('/').pop();
-  const questionsResponse = await fetch(urls.questions(questionId));
-  const json = await questionsResponse.json();
+  const questionResponse = await fetch(urls.getQuestion(questionId));
+  const json = await questionResponse.json();
   const item = json.items[0];
   res.write(templates.question(item));
 
