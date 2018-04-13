@@ -1,19 +1,12 @@
-async function index() {
-  const url = 'https://api.stackexchange.com/2.2/questions?pagesize=100&order=desc&sort=votes&tagged=service-worker&site=stackoverflow&filter=!C(o*VY))7BGSrm5xK';
-  const response = await fetch(url);
-  const json = await response.json();
-  return json.items.map((item) => {
+export function index(items) {
+  return items.map((item) => {
     return `<div>
   <a href="/questions/${item.question_id}">${item.title}</a>
 </div>`;
   }).join('');
 }
 
-async function question(questionId) {
-  const url = `https://api.stackexchange.com/2.2/questions/${questionId}?site=stackoverflow&filter=!E-NoEOOqk.KxiVtgwUSr(q72V0fqfidE4Y)th*`;
-  const response = await fetch(url);
-  const json = await response.json();
-  const item = json.items[0];
+export function question(item) {
   const question = `<h1>${item.title}</h1>
 <div>${item.body}</div>
 <div>
@@ -32,8 +25,3 @@ async function question(questionId) {
 
   return question + '<hr>' + answers;
 }
-
-module.exports = {
-  index,
-  question,
-};

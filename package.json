@@ -4,9 +4,11 @@
   "description": "A PWA for Stack Overflow content.",
   "main": "index.js",
   "scripts": {
+    "build": "npm run clean && npm run rollup && npm run workbox",
+    "clean": "rimraf build",
+    "rollup": "rollup --config rollup.config.mjs",
     "serve": "firebase serve --only hosting,functions",
-    "workbox": "workbox injectManifest",
-    "rollup": "rollup lib/make-request.mjs --format umd --name makeRequest --file build/make-request.js"
+    "workbox": "workbox injectManifest"
   },
   "repository": {
     "type": "git",
@@ -19,13 +21,14 @@
   },
   "homepage": "https://github.com/jeffposnick/application-shell#readme",
   "dependencies": {
+    "node-fetch": "^2.1.2"
+  },
+  "devDependencies": {
     "eslint": "^4.19.1",
     "eslint-config-google": "^0.9.1",
     "firebase-tools": "^3.18.3",
-    "node-fetch": "^2.1.2",
+    "rimraf": "^2.6.2",
+    "rollup": "^0.57.1",
     "workbox-cli": "^3.1.0"
-  },
-  "devDependencies": {
-    "rollup": "^0.57.1"
   }
 }

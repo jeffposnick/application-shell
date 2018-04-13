@@ -1,12 +1,10 @@
+const fetch = require('node-fetch');
 const fse = require('fs-extra');
 const functions = require('firebase-functions');
 const path = require('path');
 
-const makeRequest = require('../build/make-request');
-
-global.fetch = require('node-fetch');
-
-global.fetch = require('node-fetch');
+const templates = require('../build/templates');
+const urls = require('../build/urls');
 
 let partialCache;
 async function loadPartials() {
@@ -27,21 +25,34 @@ async function loadPartials() {
 
 module.exports.index = functions.https.onRequest(async (request, response) => {
   const partials = await loadPartials();
-  const body = await makeRequest.index();
-  const html = partials.head + partials.navbar + body + partials.foot;
+  const indexResponse = await fetch(urls.index());
+  const json = await indexResponse.json();
+  const items = json.items;
+  const html = partials.head +
+    partials.navbar +
+    templates.index(items) +
+    partials.foot;
   response.status(200).send(html);
 });
 
 module.exports.questions = functions.https.onRequest(async (request, response) => {
   const partials = await loadPartials();
-  const body = await makeRequest.question(request.url.split('/').pop());
-  const html = partials.head + partials.navbar + body + partials.foot;
+  const questionId = request.url.split('/').pop();
+  const questionsResponse = await fetch(urls.questions(questionId));
+  const json = await questionsResponse.json();
+  const item = json.items[0];
+  const html = partials.head +
+    partials.navbar +
+    templates.question(item) +
+    partials.foot;
   response.status(200).send(html);
 });
 
 module.exports.about = functions.https.onRequest(async (request, response) => {
   const partials = await loadPartials();
-  const html = partials.head + partials.navbar + partials.about +
+  const html = partials.head +
+    partials.navbar +
+    partials.about +
     partials.foot;
   response.status(200).send(html);
 });
