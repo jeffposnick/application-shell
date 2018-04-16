@@ -6,6 +6,9 @@ module.exports = {
     node: true,
     es6: true,
   },
+  globals: {
+    workbox: false,
+  },
   parserOptions: {
     ecmaVersion: 2017,
   },
@@ -17,5 +20,15 @@ module.exports = {
     parserOptions: {
       sourceType: 'module',
     },
+  }, {
+    files: [
+      '{functions,src}/*.{mjs,js}',
+    ],
+    plugins: [
+      'header',
+    ],
+    rules: {
+      'header/header': [2, 'block', {pattern: 'Copyright \\d{4} Google Inc.'}]
+    }
   }],
 };

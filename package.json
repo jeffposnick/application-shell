@@ -6,6 +6,7 @@
   "scripts": {
     "build": "npm run clean && npm run rollup && npm run workbox",
     "clean": "rimraf build",
+    "lint": "eslint --ext='.js,.mjs' .",
     "rollup": "rollup --config rollup.config.mjs",
     "serve": "firebase serve --only hosting,functions",
     "workbox": "workbox injectManifest"
@@ -23,6 +24,7 @@
   "devDependencies": {
     "eslint": "^4.19.1",
     "eslint-config-google": "^0.9.1",
+    "eslint-plugin-header": "^1.2.0",
     "firebase-tools": "^3.18.3",
     "rimraf": "^2.6.2",
     "rollup": "^0.57.1",
